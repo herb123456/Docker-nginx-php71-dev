@@ -22,9 +22,9 @@ services:
     ports:
       - 8081:80
     volumes:
-      - /Users/herb/MappingDocker/www:/var/www/html
-      - /Users/herb/MappingDocker/xhgui:/var/www/xhgui
-      - /Users/herb/MappingDocker/iso:/iso
+      - ./dev-mount/www:/var/www/html
+      - ./dev-mount/xhgui:/var/www/xhgui
+      - ./dev-mount/iso:/iso
 
   php71-dev:
     image: php71-dev
@@ -39,9 +39,20 @@ services:
     ports:
       - "9000"
     volumes:
-      - /Users/herb/MappingDocker/www:/var/www/html
-      - /Users/herb/MappingDocker/xhgui:/var/www/xhgui
-      - /Users/herb/MappingDocker/iso:/iso
+      - ./dev-mount/www:/var/www/html
+      - ./dev-mount/xhgui:/var/www/xhgui
+      - ./dev-mount/iso:/iso
 
 networks: 
   dev:
+
+# volumes:
+#   web-volumn-html: 
+#     driver: local-persist
+#       driver_opts:
+#         mountpoint: /Users/herb/MappingDocker/www
+#   web-volumn-xhgui:
+#   web-volumn-iso:
+# - /Users/herb/MappingDocker/www:/var/www/html
+# - /Users/herb/MappingDocker/xhgui:/var/www/xhgui
+# - /Users/herb/MappingDocker/iso:/iso
