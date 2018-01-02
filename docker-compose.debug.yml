@@ -25,6 +25,7 @@ services:
       - ./dev-mount/www:/var/www/html
       - ./dev-mount/xhgui:/var/www/xhgui
       - ./dev-mount/iso:/iso
+      - ./dev-mount/logs:/logs
 
   php71-dev:
     image: php71-dev
@@ -42,6 +43,7 @@ services:
       - ./dev-mount/www:/var/www/html
       - ./dev-mount/xhgui:/var/www/xhgui
       - ./dev-mount/iso:/iso
+      - ./dev-mount/logs:/logs
 
 networks: 
   dev:
