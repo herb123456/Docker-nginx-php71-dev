@@ -1,3 +1,65 @@
-version: '3'
-
+version: "3"
 services:
+
+  mongodb:
+    image: mongo:3.4
+    ports:
+      - 27017:27017
+    networks:
+      dev: 
+        aliases:
+          - mongodb
+    volumes:
+      - mongodb-data:/data/db
+  nginx:
+    image: nginx-dev
+    build:
+      context: ./nginx-dev
+    depends_on:
+      - php71-dev
+    networks:
+      dev:
+        aliases:
+          - nginx
+    ports:
+      - 8081:80
+    volumes:
+      - ./dev-mount/www:/var/www/html
+      - ./dev-mount/xhgui:/var/www/xhgui
+      - ./dev-mount/phalcon:/var/www/phalcon
+      - ./dev-mount/iso:/iso
+      - ./dev-mount/logs:/logs
+
+  php71-dev:
+    image: php71-dev
+    build:
+      context: ./php71-dev
+    depends_on:
+      - mongodb
+    networks:
+      dev: 
+        aliases:
+          - php71
+    ports:
+      - "9000"
+    volumes:
+      - ./dev-mount/www:/var/www/html
+      - ./dev-mount/xhgui:/var/www/xhgui
+      - ./dev-mount/phalcon:/var/www/phalcon
+      - ./dev-mount/iso:/iso
+      - ./dev-mount/logs:/logs
+
+networks: 
+  dev:
+
+volumes:
+  mongodb-data:
+#   web-volumn-html: 
+#     driver: local-persist
+#       driver_opts:
+#         mountpoint: /Users/herb/MappingDocker/www
+#   web-volumn-xhgui:
+#   web-volumn-iso:
+# - /Users/herb/MappingDocker/www:/var/www/html
+# - /Users/herb/MappingDocker/xhgui:/var/www/xhgui
+# - /Users/herb/MappingDocker/iso:/iso
