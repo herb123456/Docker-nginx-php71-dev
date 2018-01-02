@@ -1,0 +1,47 @@
+version: "3"
+services:
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017"
+    networks:
+      dev: 
+        aliases:
+          - mongodb
+  nginx:
+    image: nginx-dev
+    build:
+      context: ./nginx-dev
+    depends_on:
+      - php71-dev
+    networks:
+      dev:
+        aliases:
+          - nginx
+    ports:
+      - 8081:80
+    volumes:
+      - /Users/herb/MappingDocker/www:/var/www/html
+      - /Users/herb/MappingDocker/xhgui:/var/www/xhgui
+      - /Users/herb/MappingDocker/iso:/iso
+
+  php71-dev:
+    image: php71-dev
+    build:
+      context: ./php71-dev
+    depends_on:
+      - mongodb
+    networks:
+      dev: 
+        aliases:
+          - php71
+    ports:
+      - "9000"
+    volumes:
+      - /Users/herb/MappingDocker/www:/var/www/html
+      - /Users/herb/MappingDocker/xhgui:/var/www/xhgui
+      - /Users/herb/MappingDocker/iso:/iso
+
+networks: 
+  dev:
