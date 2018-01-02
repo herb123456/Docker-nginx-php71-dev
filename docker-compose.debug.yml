@@ -2,13 +2,15 @@ version: "3"
 services:
 
   mongodb:
-    image: mongo
+    image: mongo:3.4
     ports:
       - "27017"
     networks:
       dev: 
         aliases:
           - mongodb
+    volumes:
+      - mongodb-data:/data/db
   nginx:
     image: nginx-dev
     build:
@@ -48,7 +50,8 @@ services:
 networks: 
   dev:
 
-# volumes:
+volumes:
+  mongodb-data:
 #   web-volumn-html: 
 #     driver: local-persist
 #       driver_opts:
