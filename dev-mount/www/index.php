@@ -1,3 +1,3 @@
 <?php
-require '/var/www/xhgui/external/header.php';
+// require '/var/www/xhgui/external/header.php';
 phpinfo();

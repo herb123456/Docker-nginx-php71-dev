@@ -15,7 +15,8 @@ RUN yum -y install nginx
 # RUN 
 
 # copy nginx config
-ADD config/nginx/nginx.conf /etc/nginx/
+ADD config/nginx/nginx.conf /etc/nginx
+ADD config/nginx/fastcgi_params /etc/nginx
 
 RUN mkdir -p /etc/nginx/sites-available \
  && mkdir -p /etc/nginx/sites-enabled
@@ -26,6 +27,10 @@ RUN mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.back
 # copy xhgui config
 ADD config/nginx/sites-available/xhgui.conf /etc/nginx/sites-available
 RUN ln -s /etc/nginx/sites-available/xhgui.conf /etc/nginx/sites-enabled/xhgui.conf
+
+# copy phalcon config
+ADD config/nginx/sites-available/phalcon.conf /etc/nginx/sites-available
+RUN ln -s /etc/nginx/sites-available/phalcon.conf /etc/nginx/sites-enabled/phalcon.conf
 
 # copy info.php
 # RUN mkdir -p /var/www/html
@@ -132,11 +137,11 @@ EXPOSE 80
 # RUN ln -s /etc/nginx/sites-available/xhgui.conf /etc/nginx/sites-enabled/xhgui.conf
 
 # Installing supervisor
-RUN yum install -y python-setuptools
-RUN easy_install pip
-RUN pip install supervisor
+# RUN yum install -y python-setuptools
+# RUN easy_install pip
+# RUN pip install supervisor
 # Adding the configuration file of the Supervisor
-ADD config/supervisord/supervisord.conf /etc/
+# ADD config/supervisord/supervisord.conf /etc/
 
 CMD ["nginx", "-g", "daemon off;"]
 # RUN apt-get -y update && apt-get install -y fortunes

@@ -4,7 +4,7 @@ services:
   mongodb:
     image: mongo:3.4
     ports:
-      - "27017"
+      - 27017:27017
     networks:
       dev: 
         aliases:
@@ -26,6 +26,7 @@ services:
     volumes:
       - ./dev-mount/www:/var/www/html
       - ./dev-mount/xhgui:/var/www/xhgui
+      - ./dev-mount/phalcon:/var/www/phalcon
       - ./dev-mount/iso:/iso
       - ./dev-mount/logs:/logs
 
@@ -44,6 +45,7 @@ services:
     volumes:
       - ./dev-mount/www:/var/www/html
       - ./dev-mount/xhgui:/var/www/xhgui
+      - ./dev-mount/phalcon:/var/www/phalcon
       - ./dev-mount/iso:/iso
       - ./dev-mount/logs:/logs
 
