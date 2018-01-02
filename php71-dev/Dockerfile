@@ -73,7 +73,8 @@ RUN source /opt/remi/php71/enable \
     && php -v
 
 # copy php.ini
-ADD config/php.ini /etc/opt/remi/php71
+ADD config/php-ini/php.ini /etc/opt/remi/php71
+ADD config/php-ini/php.d/15-xdebug.ini /etc/opt/remi/php71/php.d
 
 # install composer
 RUN /opt/remi/php71/root/bin/php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -96,8 +97,9 @@ ADD config/php-fpm/20-xhprof.ini /etc/opt/remi/php71/php.d
 RUN mkdir -p /var/log/xhprof
 
 # 
-RUN ln -sf /dev/stdout /var/opt/remi/php71/log/php-fpm/www-error.log \
-    && ln -sf /dev/stderr /var/log/php_errors.log
+RUN ln -sf /dev/stdout /var/log/php_errors.log
+
+EXPOSE 9000
 
 # install xhgui
 # RUN yum install -y openssl-devel
@@ -111,15 +113,17 @@ RUN ln -sf /dev/stdout /var/opt/remi/php71/log/php-fpm/www-error.log \
 # RUN chown -R nginx:nginx /var/www/xhgui
 
 # Installing supervisor
-RUN yum install -y python-setuptools
-RUN easy_install pip
-RUN pip install supervisor
+# RUN yum install -y python-setuptools
+# RUN easy_install pip
+# RUN pip install supervisor
 # Adding the configuration file of the Supervisor
-ADD config/supervisord/supervisord.conf /etc/
+# ADD config/supervisord/supervisord.conf /etc/
 
 # CMD ["nginx", "-g", "daemon off;"]
 # RUN apt-get -y update && apt-get install -y fortunes
 # CMD /usr/games/fortune -a | cowsay
 
 # Executing supervisord
-CMD ["supervisord", "-n"]
+# CMD ["supervisord", "-n"]
+
+CMD ["/opt/remi/php71/root/usr/sbin/php-fpm", "-c", "/etc/opt/remi/php71/php-fpm.conf"]

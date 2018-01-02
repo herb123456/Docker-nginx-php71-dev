@@ -28,8 +28,8 @@ ADD config/nginx/sites-available/xhgui.conf /etc/nginx/sites-available
 RUN ln -s /etc/nginx/sites-available/xhgui.conf /etc/nginx/sites-enabled/xhgui.conf
 
 # copy info.php
-RUN mkdir -p /var/www/html
-ADD info.php /var/www/html/
+# RUN mkdir -p /var/www/html
+# ADD info.php /var/www/html/
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
